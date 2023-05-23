@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="WpfControlLibrary1.DSSControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
+             xmlns:local="clr-namespace:WpfControlLibrary1"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             mc:Ignorable="d" 
+             d:DesignHeight="95" d:DesignWidth="552">
+    <Grid  Height="95" Width="552">
+        <Rectangle Stroke="#FFFFFFFF" StrokeThickness="4" Fill="#FFF3F3F3"/>
+        <Label Name="TitleLabel" Content="{Binding Title, FallbackValue=Title}" FontSize="22" FontWeight="Bold" Margin="10,0,0,0"/>
+        <Label Content="Time to event:" FontSize="16" Margin="10,55,0,0"/>
+        <Label Name="ShotClockLabel" Content="{Binding ShotClock, FallbackValue=00.00}" FontSize="16" Margin="115,55,0,0"/>
+        <Button Name="RunBtn" Content="{Binding Action, FallbackValue=Run}" Margin="345,20,10,45" FontSize="16" Click="RunBtn_Click" />
+        <Button Name="DisregardBtn" Content="Disregard" Margin="345,55,10,10" FontSize="16" Click="DisregardBtn_Click"/>
+    </Grid>
+</UserControl>
+

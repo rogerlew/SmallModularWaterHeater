@@ -1,0 +1,53 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" 
+			 x:Class="WpfControlLibrary1.ControlValve"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>                
+                <ResourceDictionary Source="ComponentStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        
+        <!-- #Region Bowtie-->
+        <Polygon 
+            Name="Bowtie"
+            Points="50,210 50,105 250,210 250,105"
+            Style="{StaticResource PolygonStyle}"/>
+        <!-- #EndRegion -->
+
+        <!-- #Region Bell-->
+        <Ellipse  
+            Height="85" 
+            Margin="106,78,0,0"  
+            Width="88" 
+            Style="{StaticResource EllipseStyle}">
+    	  <Ellipse.Clip>
+    	    <RectangleGeometry Rect="0,-38,100,80"/>
+		  </Ellipse.Clip>
+		</Ellipse>
+    	<Rectangle 
+            Height="4" 
+            Margin="106,116,0,0" 
+            Width="88"
+            Style="{StaticResource RectangleStyle}"/>
+        <!-- #EndRegion -->
+
+        <!-- #Region Stem-->
+        <Rectangle  
+            Height="43" 
+            Margin="148,116,0,0"  
+            Width="4"
+            Style="{StaticResource RectangleStyle}"/>
+        <!-- #EndRegion -->
+    </Grid>
+</UserControl>

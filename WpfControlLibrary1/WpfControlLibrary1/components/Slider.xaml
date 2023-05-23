@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="WpfControlLibrary1.Slider"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="260"
+            >
+    <Grid>
+        
+            <Path Stroke="Black" StrokeThickness="3" Data="M 20,15 220,15" MouseDown="PathMover1" />
+        <Path Name="Position" Stroke="DarkGray"  StrokeThickness="6" Data="M 130,25 130,5" MouseMove="PathMover"/>
+        <Label 
+            Name="StepValueLabel" 
+            Content="{Binding Path=StepValue, FallbackValue=10}" Visibility="Hidden" />
+        <Label 
+            Name="RangeLabel" 
+            Content="{Binding Path=Range, FallbackValue=100}" Visibility="Hidden" />
+        <Label 
+            Name="RangeMinLabel" 
+            FontSize="12" Foreground="Black" 
+            HorizontalContentAlignment="Left" 
+            Content="{Binding Path=MinValue, FallbackValue=0}" Margin="0,0,195,2"/>
+        <Label 
+            Name="RangeMaxLabel" 
+            FontSize="12" Foreground="Black" 
+            HorizontalContentAlignment="Right" 
+            Content="{Binding Path=MaxValue, FallbackValue=0}" Margin="163,0,0,2" />
+        
+
+    </Grid>
+</UserControl>

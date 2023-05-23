@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="WpfControlLibrary1.Close"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="12" d:DesignWidth="12"
+             Background="Transparent"
+             BorderBrush="Transparent"
+             BorderThickness="0"
+             MouseEnter="Button_MouseEnter"
+             MouseLeave="Button_MouseLeave">
+    <Canvas Name="CanvasBackground" >
+        <Polyline Name="x1"  
+                  Stroke="#FF333333" StrokeThickness="2" 
+                  Points="2,2 10,10" 
+                  StrokeStartLineCap="Triangle" 
+                  StrokeEndLineCap="Triangle" />
+        <Polyline Name="x2" 
+                  Stroke="#FF333333" StrokeThickness="2" 
+                  Points="10,2 2,10" 
+                  StrokeStartLineCap="Triangle" StrokeEndLineCap="Triangle" />
+    </Canvas>
+</UserControl>

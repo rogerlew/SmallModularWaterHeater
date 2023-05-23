@@ -1,0 +1,700 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using System.Windows;
+
+using IniParser;
+
+namespace WaterHeater
+{
+    class Model
+    {
+        public double SHw;
+        public double UA;
+        public double Tamb;
+        public double Qon;
+
+        public double MCapacity;
+        public double MHigh;
+        public double MLow;
+        public double SOMHigh;
+        public double SOMLow;
+
+        public double AccumMCapacity;
+        public double AccumMHigh;
+        public double AccumMLow;
+        public double SOAccumMHigh;
+        public double SOAccumMLow;
+
+        public double ThermostatHigh;
+        public double ThermostatLow;
+        public double HeaterDebounce;
+        public double HeaterLastChanged;
+        public double SOThermostatHigh;
+
+        public double DiverterDebounce;
+        public double DiverterLow;
+        public double DiverterLastChanged;
+        public double SODiverterLow;
+
+        public double sr;
+        public double dt;
+        public double tMultiplier;
+        public double PumpLeakRate;
+
+        Random random;
+
+        public double TempOld;
+        public double TempCur;
+
+        public double MinCur;
+        public double MoutCur;
+        public double AccumAoutCur;
+        public double AccumBoutCur;
+
+        public double TankLevel;
+        public double MassOld;
+        public double MassCur;
+        public double MassDiff;
+        public double Q;
+
+        public double AccumALevel;
+        public double AccumBLevel;
+        public double AccumAMassOld;
+        public double AccumBMassOld;
+        public double AccumAMassCur;
+        public double AccumBMassCur;
+
+        public double dTankMass;
+        public double dTankTemp;
+        public double dAccumAMass;
+        public double dAccumBMass;
+
+        public double ttTankMassHigh = 0.0;
+        public double ttTankMassLow = 0.0;
+        public double ttTankTempHigh = 0.0;
+        public double ttTankTempLow = 0.0;
+        public double ttAccumAMassHigh = 0.0;
+        public double ttAccumAMassLow = 0.0;
+        public double ttAccumBMassHigh = 0.0;
+        public double ttAccumBMassLow = 0.0;
+
+        public String PumpMode;
+        public String InValveMode;
+        public String HeaterMode;
+        public String DiverterValveMode;
+
+        public bool PumpState;
+        public bool InValveState;
+        public bool HeaterState;
+        public bool DiverterValveState;
+
+        public bool SOTempHighActuated = false;
+        public bool SOLevelHighActuated = false;
+        public bool SOLevelLowActuated = false;
+        public bool SOAccumALevelHighActuated = false;
+        public bool SOAccumALevelLowActuated = false;
+        public bool SOAccumBLevelHighActuated = false;
+        public bool SOAccumBLevelLowActuated = false;
+
+        public bool SCRAMed;
+
+        public int n;
+        public double t;
+
+        public Model(String ConfigFileName)
+        {
+            ReadConfig(ConfigFileName);
+
+            random = new Random();
+
+            // initial temp of tank in F
+            double T0 = RandBetween(ThermostatLow, ThermostatHigh);
+            TempOld = T0; // initial temperature (F)
+            TempCur = T0; // controller needs two samples
+
+            // initial level of tank in Percentage
+
+            double M0 = RandBetween(MLow, MCapacity);
+
+            TankLevel = 100 * M0 / MCapacity;
+            MassOld = M0; // initial mass (lb)
+            MassCur = M0; // controller needs two samples
+            MassDiff = 0;
+
+            M0 = 80;
+            AccumALevel = 100 * M0 / AccumMCapacity;
+            AccumAMassOld = M0;
+            AccumAMassCur = M0;
+
+            AccumBLevel = 100 * M0 / AccumMCapacity;
+            AccumBMassOld = M0;
+            AccumBMassCur = M0;
+
+            n = 0;
+            t = 0.0;
+            DiverterLastChanged = t;
+            HeaterLastChanged = t;
+        }
+
+        private void ReadConfig(String ConfigFileName)
+        {
+            // Read Configuration file
+            FileIniDataParser parser = new FileIniDataParser();
+            IniData data = parser.LoadFile(ConfigFileName);
+            
+            // GeneralConfiguration
+            tMultiplier = Convert.ToDouble(data["GeneralConfiguration"]["tMultiplier"]);
+            SHw = Convert.ToDouble(data["GeneralConfiguration"]["SHw"]);
+            Tamb = Convert.ToDouble(data["GeneralConfiguration"]["Tamb"]);
+            SCRAMed = Convert.ToBoolean(data["GeneralConfiguration"]["SCRAMed"]);
+
+            // WaterHeater
+            UA = Convert.ToDouble(data["WaterHeater"]["UA"]);
+            MCapacity = Convert.ToDouble(data["WaterHeater"]["MCapacity"]);
+
+            // Accumulators
+            AccumMCapacity = Convert.ToDouble((String)(data["Accumulators"]["AccumMCapacity"]));
+            AccumMHigh = Convert.ToDouble(data["Accumulators"]["AccumMHigh"]);
+            AccumMLow = Convert.ToDouble(data["Accumulators"]["AccumMLow"]);
+            SOAccumMHigh = Convert.ToDouble(data["Accumulators"]["SafetyMHigh"]);
+            SOAccumMLow = Convert.ToDouble(data["Accumulators"]["SafetyMLow"]);
+
+            // InValveController
+            InValveMode = data["InValveController"]["InValveMode"];
+            MHigh = Convert.ToDouble(data["InValveController"]["MHigh"]);
+            MLow = Convert.ToDouble(data["InValveController"]["MLow"]);
+            SOMHigh = Convert.ToDouble(data["InValveController"]["SafetyMHigh"]);
+            SOMLow = Convert.ToDouble(data["InValveController"]["SafetyMLow"]);
+            InValveMode = InValveMode.Substring(1, InValveMode.Length - 2);
+            if (InValveMode == "Auto" || InValveMode == "On")
+                InValveState = true;
+            else
+                InValveState = false;
+
+            // PumpController
+            PumpMode = data["PumpController"]["PumpMode"];
+            PumpMode = PumpMode.Substring(1, PumpMode.Length - 2);
+            Console.WriteLine(PumpMode);
+
+            if (PumpMode == "Auto" || PumpMode == "Off")
+                PumpState = true;
+            else
+                PumpState = false;
+            PumpLeakRate = Convert.ToDouble(data["PumpController"]["PumpLeakRate"]);
+
+            // HeaterController
+            if (HeaterMode == "Auto" || HeaterMode == "Off")
+                HeaterState = false;
+            else
+                HeaterState = true;
+            HeaterMode = data["HeaterController"]["HeaterMode"];
+            HeaterMode = HeaterMode.Substring(1, HeaterMode.Length - 2);
+            Qon = Convert.ToDouble(data["HeaterController"]["Qon"]);
+            ThermostatHigh = Convert.ToDouble(data["HeaterController"]["ThermostatHigh"]);
+            ThermostatLow = Convert.ToDouble(data["HeaterController"]["ThermostatLow"]);
+            HeaterDebounce = Convert.ToDouble(data["HeaterController"]["HeaterDebounce"]);
+            SOThermostatHigh = Convert.ToDouble(data["HeaterController"]["SafetyHigh"]);
+
+            // DiverterValveController 
+            DiverterValveMode = data["DiverterValveController"]["DiverterValveMode"];
+            DiverterValveMode = DiverterValveMode.Substring(1, DiverterValveMode.Length - 2);
+            if (DiverterValveMode == "Auto" || DiverterValveMode == "Accumulator A")
+                DiverterValveState = false;
+            else
+                DiverterValveState = true;
+            DiverterDebounce = Convert.ToDouble(data["DiverterValveController"]["DiverterDebounce"]);
+            DiverterLow = Convert.ToDouble(data["DiverterValveController"]["DiverterLow"]);
+            SODiverterLow = Convert.ToDouble(data["DiverterValveController"]["SafetyDiverterLow"]);
+
+        }
+
+        private double RandBetween(double low, double high)
+        {
+            Debug.Assert(high > low);
+            return random.NextDouble() * 0.5 * (high - low) + low;
+        }
+
+        private double Normal(double mean, double stdDev)
+        {
+            // http://stackoverflow.com/questions/218060/random-gaussian-variables
+
+            double u1 = random.NextDouble();
+            double u2 = random.NextDouble();
+            double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1))
+                                   * Math.Sin(2.0 * Math.PI * u2);
+            return mean + stdDev * randStdNormal;
+        }
+
+        private double InValveController(double Mavailable)
+        {
+            if (SCRAMed)
+                return 0.0;
+
+            switch (InValveMode)
+            {
+                case "Auto":
+                    return controller(MassCur, MassOld, MLow, MHigh)
+                           * Mavailable;
+                case "Open":
+                    return Mavailable;
+                default:
+                    return 0.0;
+            }
+        }
+
+        private double TempController()
+        {
+            if (SCRAMed)
+                return 0.0;
+
+            if ((t - HeaterLastChanged) < HeaterDebounce)
+            {
+                if (HeaterState)
+                    return Qon;
+                else
+                    return 0;
+            }
+
+            double newOut = 0;
+
+            switch (HeaterMode)
+            {
+                case "Auto":
+                    newOut = controller(TempCur, TempOld,
+                                      ThermostatLow, ThermostatHigh) * Qon;
+                    break;
+                case "On":
+                    newOut = Qon;
+                    break;
+                default:
+                    newOut = 0;
+                    break;
+            }
+
+            bool newHeaterState = newOut > 0.0;
+
+            if (HeaterState != newHeaterState)
+                HeaterLastChanged = t;
+
+            return newOut;
+
+        }
+
+        private double PumpController(double TankOutFlow)
+        {
+            if (SCRAMed)
+                return 0;
+
+            switch (PumpMode)
+            {
+                case "Auto":
+                    if (!DiverterValveState)
+                        return controller(AccumAMassCur, AccumAMassOld, 
+                                          AccumMLow, AccumMHigh)
+                               * TankOutFlow;
+                    else
+                        return controller(AccumBMassCur, AccumBMassOld, 
+                                          AccumMLow, AccumMHigh)
+                               * TankOutFlow;
+
+                case "Off":
+                    return 0;
+                default:
+                    return TankOutFlow;
+            }
+        }
+
+        private bool DiverterController()
+        {
+            if ((t - DiverterLastChanged) < DiverterDebounce)
+                return DiverterValveState;
+
+            bool newDiverterState;
+
+            switch (DiverterValveMode)
+            {
+                case "Auto":
+                    if ((AccumALevel < DiverterLow) && (AccumBLevel < DiverterLow))
+                        newDiverterState = (AccumALevel > AccumBLevel);
+                    else if (AccumALevel < DiverterLow)
+                        newDiverterState = false;
+                    else if (AccumBLevel < DiverterLow)
+                        newDiverterState = true;
+                    else
+                        newDiverterState = DiverterValveState;
+                    break;
+
+                case "Accumulator A":
+                    newDiverterState = false;
+                    break;
+
+                default:
+                    newDiverterState = true;
+                    break;
+            }
+            
+            if (DiverterValveState != newDiverterState)
+                DiverterLastChanged = t;
+
+            return newDiverterState;
+        }
+
+        private double SOPumpController(double TankOutFlow)
+        {
+            if (SCRAMed)
+                return 0;
+
+            if (!DiverterValveState)
+                return controller(AccumAMassCur, AccumAMassOld,
+                                  SOAccumMLow, SOAccumMHigh)
+                       * TankOutFlow;
+            else
+                return controller(AccumBMassCur, AccumBMassOld,
+                                  SOAccumMLow, SOAccumMHigh)
+                       * TankOutFlow;
+        }
+
+        private bool SODiverterController()
+        {
+            if ((t - DiverterLastChanged) < DiverterDebounce)
+                return DiverterValveState;
+
+            bool newDiverterState;
+
+            if ((AccumALevel < SODiverterLow) && (AccumBLevel < SODiverterLow))
+                newDiverterState = (AccumALevel > AccumBLevel);
+            else if (AccumALevel < SODiverterLow)
+                newDiverterState = false;
+            else if (AccumBLevel < SODiverterLow)
+                newDiverterState = true;
+            else
+                newDiverterState = DiverterValveState;
+
+            if (DiverterValveState != newDiverterState)
+                DiverterLastChanged = t;
+
+            return newDiverterState;
+        }
+
+        private double controller(double Cur, double Prev,
+                                  double Low, double High)
+        {
+            // Simple setpoint controller
+            if ((Cur - Prev > 0 && Cur < High) || (Cur < Low))
+            {
+                return 1.0;
+            }
+
+            return 0.0;
+
+        }
+
+        public void Update(double tnew,
+                           double Mavailable, // rate of available input water
+                           double Tavailable, // temp of available input water
+                           double TankOutFlow,
+                           double AccumARequestedOut,  // requested output rate from Accumulator A
+                           double AccumBRequestedOut)  // requested output rate from Accumulator B
+        {
+            // Update time variables
+            tnew *= tMultiplier;
+            dt = tnew - t;
+            sr = 1.0 / dt;
+            t = tnew;
+
+            // Update Safety Override States
+            // The Safety Override actions are decided else where
+            UpdateSafetyOverrideStates();
+
+            // Find mass of the tank
+            double MassNew = UpdateTankMass(Mavailable, TankOutFlow);
+
+            // Find temperature of the tank
+            double TempNew = UpdateTankTemperature(Tavailable, MassNew);
+
+            // Figure out the Mass inputs to the accumulator
+            double[] ReturnedArray = UpdateAccumInflows();
+            double AccumAMinCur = ReturnedArray[0];
+            double AccumBMinCur = ReturnedArray[1];
+
+            // Find the Mass outputs from the accumulators
+            AccumAoutCur = AccumARequestedOut;
+            AccumBoutCur = AccumBRequestedOut;
+
+            // Update the mass of Accumulator A
+            ReturnedArray = UpdateAccumMass(MassNew,
+                                            AccumAMinCur, AccumAoutCur, 
+                                            AccumAMassCur, AccumARequestedOut);
+            double AccumAMassDiff = ReturnedArray[0];
+            double AccumAMassNew = ReturnedArray[1];
+            AccumAoutCur = ReturnedArray[2];
+
+            // Update the mass of Accumulator B
+            ReturnedArray = UpdateAccumMass(MassNew,
+                                            AccumBMinCur, AccumBoutCur, 
+                                            AccumBMassCur, AccumBRequestedOut);
+            double AccumBMassDiff = ReturnedArray[0];
+            double AccumBMassNew = ReturnedArray[1];
+            AccumBoutCur = ReturnedArray[2];
+
+            // Update Counter and state variables
+            n += 1;
+
+            TankLevel = MassNew / MCapacity * 100.0;
+            MassOld = MassCur;
+            MassCur = MassNew;
+
+            TempOld = TempCur;
+            TempCur = TempNew;
+
+            AccumALevel = AccumAMassNew / AccumMCapacity * 100.0;
+            AccumBLevel = AccumBMassNew / AccumMCapacity * 100.0;
+
+            AccumAMassOld = AccumAMassCur;
+            AccumBMassOld = AccumBMassCur;
+
+            AccumAMassCur = AccumAMassNew;
+            AccumBMassCur = AccumBMassNew;
+
+            InValveState = MassDiff > 0;
+            HeaterState = Q > 0;
+
+            // Update the time to setpoint estimates for the Decision Support System
+            // DSS logic is controlled in MainWindow
+            UpdateDSSPredictionVariables();
+
+        }
+
+        public double CalculateTimeToSetpoint(double Setpoint, double Current, double Rate,
+                                              bool SetpointIsHigh)
+        {
+            double Ret = (Setpoint - Current) / (Rate * tMultiplier);
+            if (!SetpointIsHigh && (Current <= Setpoint))
+                Ret = 0.0;
+            else if (SetpointIsHigh && (Current >= Setpoint))
+                Ret = 0.0;
+            else if (Ret < 0.0)
+                Ret = Double.PositiveInfinity;
+
+            return Ret;
+        }
+
+        private void UpdateDSSPredictionVariables()
+        {
+
+            dTankMass = ((MassCur - MassOld) / dt);
+            ttTankMassHigh = CalculateTimeToSetpoint(MHigh, MassCur, dTankMass, true);
+            ttTankMassLow = CalculateTimeToSetpoint(MLow, MassCur, dTankMass, false);
+
+            dTankTemp = ((TempCur - TempOld) / dt);
+            ttTankTempHigh = CalculateTimeToSetpoint(ThermostatHigh, TempCur, dTankTemp, true);
+            ttTankTempLow = CalculateTimeToSetpoint(ThermostatLow, TempCur, dTankTemp / tMultiplier, false);
+
+            dAccumAMass = ((AccumAMassCur - AccumAMassOld) / dt);
+            ttAccumAMassHigh = CalculateTimeToSetpoint(AccumMHigh, AccumAMassCur, dAccumAMass, true);
+            ttAccumAMassLow = CalculateTimeToSetpoint(AccumMLow, AccumAMassCur, dAccumAMass, false);
+
+            dAccumBMass = ((AccumBMassCur - AccumBMassOld) / dt);
+            ttAccumBMassHigh = CalculateTimeToSetpoint(AccumMHigh, AccumBMassCur, dAccumBMass, true);
+            ttAccumBMassLow = CalculateTimeToSetpoint(AccumMLow, AccumBMassCur, dAccumBMass, false);
+        }
+
+        private void UpdateSafetyOverrideStates()
+
+        {   // Level High Safety Override
+            if (MassCur > SOMHigh)
+                SOLevelHighActuated = true;
+
+            else if (SOLevelHighActuated && MassCur < MHigh)
+                SOLevelHighActuated = false;
+
+            // Level Low Safety Override
+            if (MassCur < SOMLow)
+                SOLevelLowActuated = true;
+
+            else if (SOLevelLowActuated && MassCur > MLow)
+                SOLevelLowActuated = false;
+
+            // Temp High Safety Override
+            if (TempCur > SOThermostatHigh)
+                SOTempHighActuated = true;
+
+            else if (SOTempHighActuated && TempCur < ThermostatHigh)
+                SOTempHighActuated = false;
+
+            // Accum A Level High Safety Override
+            if (AccumAMassCur > SOAccumMHigh)
+                SOAccumALevelHighActuated = true;
+
+            else if (SOAccumALevelHighActuated && AccumAMassCur < AccumMHigh)
+                SOAccumALevelHighActuated = false;
+
+            // Accum A Level Low Safety Override
+            if (AccumAMassCur < SOAccumMLow)
+                SOAccumALevelLowActuated = true;
+
+            else if (SOAccumALevelLowActuated && AccumAMassCur > AccumMLow)
+                SOAccumALevelLowActuated = false;
+
+            // Accum B Level High Safety Override
+            if (AccumBMassCur > SOAccumMHigh)
+                SOAccumBLevelHighActuated = true;
+
+            else if (SOAccumBLevelHighActuated && AccumBMassCur < AccumMHigh)
+                SOAccumBLevelHighActuated = false;
+
+            // Accum B Level Low Safety Override
+            if (AccumBMassCur < SOAccumMLow)
+                SOAccumBLevelLowActuated = true;
+
+            else if (SOAccumBLevelLowActuated && AccumBMassCur > AccumMLow)
+                SOAccumBLevelLowActuated = false;
+        }
+
+        private double UpdateTankMass(double Mavailable, double TankOutFlow)
+        {
+            // Apply Inlet Flow
+            if (SOLevelHighActuated)
+                MinCur = 0;
+            else if (SOLevelLowActuated)
+                MinCur = Mavailable;
+            else
+                MinCur = InValveController(Mavailable);
+
+            MassDiff = MinCur / sr;
+            double MassNew = MassCur + MassDiff;
+
+            if (SOAccumALevelHighActuated || SOAccumALevelLowActuated ||
+                SOAccumBLevelHighActuated || SOAccumBLevelLowActuated)
+            {
+                DiverterValveState = SODiverterController();
+                MoutCur = SOPumpController(TankOutFlow);
+            }
+            else
+            {
+                DiverterValveState = DiverterController();
+                MoutCur = PumpController(TankOutFlow);
+            }
+            // If mass exceeds capacity of tank truncate mass difference
+            if (MassNew > MCapacity)
+            {
+                MassDiff = MassNew - MCapacity;
+                MassNew = MCapacity;
+                MinCur = MoutCur;
+            }
+
+            MassNew -= MoutCur / sr;
+
+            return MassNew;
+
+        }
+
+        private double UpdateTankTemperature(double Tavailable, double MassNew)
+        {
+            // Update tank temperature
+            if (MassDiff > 0.0)
+            {
+                TempCur = (TempCur * (MassCur - MoutCur / sr) + Tavailable * MassDiff) / MassNew;
+            }
+
+            double TempNew = TempOld;
+
+            // if tank is empty, update state variables and return
+            if (MassNew <= 0.0)
+            {
+
+                MassNew = 0.0;
+                MassOld = 0.0;
+                MassCur = 0.0;
+
+                InValveState = MassDiff > 0;
+                HeaterState = Q > 0;
+
+            }
+            else
+            {
+                // Find heater input
+                if (SOTempHighActuated)
+                    Q = 0;
+                else
+                    Q = TempController();
+
+                // Apply difference equation to compensate
+                // for heat loss and heater input
+                TempNew = (-UA * TempCur + UA * Tamb + Q) *
+                          dt / (MassNew * SHw) + TempCur;
+            }
+            return TempNew;
+        }
+
+        private double[] UpdateAccumInflows()
+        {
+
+            double[] AccumMinCur = new double[] {0, 0};
+
+            // Find accumulator inflow
+
+            if (!DiverterValveState)
+            {
+                if (!PumpState)
+                    AccumMinCur[0] = Normal(PumpLeakRate, 0.3);
+                else
+                    AccumMinCur[0] = MoutCur;
+
+                AccumMinCur[1] = 0;
+            }
+            else
+            {
+                if (!PumpState)
+                    AccumMinCur[1] = Normal(PumpLeakRate, 0.3);
+                else
+                    AccumMinCur[1] = MoutCur;
+
+                AccumMinCur[0] = 0;
+            }
+            return AccumMinCur;
+        }
+
+        private double[] UpdateAccumMass(double MassNew,
+                                         double AccumMinCur, double AccumMoutCur,
+                                         double AccumMassCur, double AccumRequestedOut)
+        {
+            double AccumMassDiff = (AccumMinCur - AccumMoutCur) / sr;
+            double AccumMassNew = AccumMassCur + AccumMassDiff;
+
+            // If mass exceeds capacity of tank truncate mass difference
+            if (AccumMassNew >= AccumMCapacity)
+            {
+                AccumMassDiff = AccumMassNew - AccumMCapacity;
+                AccumMassNew = AccumMCapacity;
+                AccumMinCur = AccumAoutCur;
+                MoutCur = AccumAoutCur;
+
+                if (MassNew >= MCapacity * 0.99)
+                    MinCur = MoutCur;
+            }
+
+            // If Mass is less than capacity truncate
+            if (AccumMassNew <= 0.0)
+            {
+                AccumMassNew = 0.0;
+                AccumMassCur = 0.0;
+                AccumMassDiff = AccumMassNew - AccumMCapacity;
+            }
+
+            return new double[] { AccumMassDiff, AccumMassNew, AccumMoutCur };
+        }
+    }
+}
+
+
+
+//            // Apply outlet flow
+//            MoutCur = Mout + 40.0 * Math.Sin(6.283185 * 0.001 * t)
+//                           + 20.0 * Math.Sin(0.9313 * 6.283185 * 0.007 * t)
+//                           + 10.0 * Math.Sin(0.423 * 6.283185 * 0.011 * t);

@@ -1,0 +1,68 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="WpfControlLibrary1.DiverterValve"
+	x:Name="UserControl"
+             d:DesignHeight="300" d:DesignWidth="300">    
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>                
+                <ResourceDictionary Source="ComponentStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        
+        <!-- #Region Right Bowtie-->
+        <Polygon 
+            Name="Right"
+            Points="50,210 50,105 150,157.5"
+            Style="{StaticResource PolygonStyle}"/>
+        <!-- #EndRegion -->
+        
+        <!-- #Region Left Bowtie-->
+        <Polygon 
+            Name="Left"
+            Points="250,210 250,105 150,157.5"
+            Style="{StaticResource PolygonStyle}"/>
+        <!-- #EndRegion -->
+        
+        <!-- #Region Down Bowtie-->
+        <Polygon 
+            Name="Down"
+            Points="97.5,257.5 202.5,257.5 150,157.5"
+            Style="{StaticResource PolygonStyleK}"/>
+        <!-- #EndRegion -->
+        
+        <!-- #Region Bell-->
+        <Ellipse  
+            Height="86" 
+            Margin="106,78,0,0"  
+            Width="88" 
+            Style="{StaticResource EllipseStyle}">
+            <Ellipse.Clip>
+                <RectangleGeometry Rect="0,-38,100,80"/>
+            </Ellipse.Clip>
+        </Ellipse>
+        <Rectangle 
+            Height="3" 
+            Margin="106,122,0,0" 
+            Width="88"
+            Style="{StaticResource RectangleStyle}"/>
+        <!-- #EndRegion -->
+
+        <!-- #Region Stem-->
+        <Rectangle  
+            Height="37" 
+            Margin="148,122,0,0"  
+            Width="4"
+            Style="{StaticResource RectangleStyle}"/>
+        <!-- #EndRegion -->
+
+    </Grid>
+</UserControl>

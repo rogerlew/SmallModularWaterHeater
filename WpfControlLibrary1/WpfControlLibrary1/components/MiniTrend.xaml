@@ -1,0 +1,95 @@
+﻿<UserControl x:Class="WpfControlLibrary1.MiniTrend"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="200">
+    <Grid>
+        <Border Width="Auto" Height="Auto" BorderBrush="Black" BorderThickness="1" Background="LightGray"/>
+        <Label 
+            Name="TitleLabel" 
+            Width="200" Height="32" 
+            FontSize="16" Foreground="Black" 
+            HorizontalContentAlignment="Center" 
+            Margin="0,-4,0,175"
+            Content="{Binding Path=Title}" />
+        <Label 
+            Name="UnitsLabel" 
+            Width="100" Height="32" 
+            FontSize="16" Foreground="Black" 
+            HorizontalContentAlignment="Left" 
+            Margin="100,170,0,0"
+            Content="{Binding Path=Units}"/>
+        <Label 
+            Name="ValueLabel" 
+            Width="100" Height="32" 
+            FontSize="16" Foreground="Black" 
+            HorizontalContentAlignment="Right" 
+            Margin="0,170,100,0"
+            Content="{Binding Path=ValueStr}"/>
+        <Label 
+            Name="YminLabel" 
+            Width="100" Height="32" 
+            FontSize="16" Foreground="#FF333333" 
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Left" 
+            Margin="17,158,83,10"
+            Content="{Binding Path=YminStr}"/>
+        <Label 
+            Name="YmaxLabel" 
+            Width="100" Height="32" 
+            FontSize="16" Foreground="#FF333333"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Left" 
+            Margin="17,10,83,158"
+            Content="{Binding Path=YmaxStr}"/>
+        <Label 
+            Name="LowAlarmLabel" 
+            Width="100" Height="32" 
+            FontSize="16" Foreground="#FF333333"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Right" 
+            Margin="84,151,16,17"
+            Content="{Binding Path=LowAlarmStr}"/>
+        <Label 
+            Name="HighAlarmLabel" 
+            Width="100" Height="32" 
+            FontSize="16" Foreground="#FF333333"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Right" 
+            Margin="84,16,16,152"
+            Content="{Binding Path=HighAlarmStr}"/>
+        <Grid 
+            Name="Container" 
+            Width="180" Height="150">
+            <Rectangle
+                Name="HighAlarmRect" 
+                Width="Auto" Height="8" 
+                Fill="Red" Opacity="0.2"
+                VerticalAlignment="Top"/>
+            <Rectangle
+                Name="HighWarningRect" 
+                Width="Auto" Height="30" 
+                Fill="Yellow" Opacity="0.2"
+                VerticalAlignment="Top"
+                Margin="0,7.5,0,0"/>
+            <Rectangle
+                Name="LowWarningRect" 
+                Width="Auto" Height="30" 
+                Fill="Yellow" Opacity="0.2"
+                VerticalAlignment="Bottom"
+                Margin="0,0,0,7.5"/>
+            <Rectangle
+                Name="LowAlarmRect" 
+                Width="Auto" Height="7.5" 
+                Fill="Red" Opacity="0.2"
+                VerticalAlignment="Bottom"/>
+            <Path Name="YLimPath" Stroke="#FF333333" StrokeThickness="1" Data="M 10,0 0,0 0,150 10,150"/>
+            <Path Name="AlarmLimPath" Stroke="#FF333333" StrokeThickness="1" Data="M 170,7.5 180,7.5 180,142.5 170,142.5"/>
+            <Path Name="Trend" Stroke="Black" StrokeThickness="2" Data="M 0,75 200,75"/>
+        </Grid>
+        
+    </Grid>
+</UserControl>

@@ -1,0 +1,3 @@
+Copyright 2015 - Roger Lew (rogerlew@vandals.uidaho.edu || rogerlew@gmail.com)
+
+This software is licensed under GPLv3 (http://www.gnu.org/copyleft/gpl.html)

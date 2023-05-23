@@ -1,0 +1,432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DCAC39B2-B094-4B51-9BA2-355065B86886}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WpfControlLibrary1</RootNamespace>
+    <AssemblyName>WpfControlLibrary1</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <ExpressionBlendVersion>5.2.30810.0</ExpressionBlendVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Drawing" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="components\AnnunciatingMiniTrend.xaml.cs">
+      <DependentUpon>AnnunciatingMiniTrend.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\BarIndicator.xaml.cs">
+      <DependentUpon>BarIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\BatchTank.xaml.cs">
+      <DependentUpon>BatchTank.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\CircuitBreaker.xaml.cs">
+      <DependentUpon>CircuitBreaker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\Close.xaml.cs">
+      <DependentUpon>Close.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\DelayHeader.xaml.cs">
+      <DependentUpon>DelayHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\DiverterValve3.xaml.cs">
+      <DependentUpon>DiverterValve3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\DSSControl.xaml.cs">
+      <DependentUpon>DSSControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\GlobeValve.xaml.cs">
+      <DependentUpon>GlobeValve.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\LOTO.xaml.cs">
+      <DependentUpon>LOTO.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\MultiMiniTrend.xaml.cs">
+      <DependentUpon>MultiMiniTrend.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\OPCAlarmIndicator.xaml.cs">
+      <DependentUpon>OPCAlarmIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\Orifice.xaml.cs">
+      <DependentUpon>Orifice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\Permissive.xaml.cs">
+      <DependentUpon>Permissive.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\PHMValve.xaml.cs">
+      <DependentUpon>PHMValve.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\Pressurizer.xaml.cs">
+      <DependentUpon>Pressurizer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\PZRHeaterElement.xaml.cs">
+      <DependentUpon>PZRHeaterElement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\RCPSeal.xaml.cs">
+      <DependentUpon>RCPSeal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\ReactorCoolantPump.xaml.cs">
+      <DependentUpon>ReactorCoolantPump.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\ReactorCore.xaml.cs">
+      <DependentUpon>ReactorCore.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\Slider.xaml.cs">
+      <DependentUpon>Slider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\StackedMiniTrend.xaml.cs">
+      <DependentUpon>StackedMiniTrend.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\Demin.xaml.cs">
+      <DependentUpon>Demin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\DiverterValve.xaml.cs">
+      <DependentUpon>DiverterValve.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\Heater.xaml.cs">
+      <DependentUpon>Heater.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\LinkLabel.xaml.cs">
+      <DependentUpon>LinkLabel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\MixingTee.xaml.cs">
+      <DependentUpon>MixingTee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\Annunciator.xaml.cs">
+      <DependentUpon>Annunciator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\PlayButton.xaml.cs">
+      <DependentUpon>PlayButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\SteamGenerator.xaml.cs">
+      <DependentUpon>SteamGenerator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\StopButton.xaml.cs">
+      <DependentUpon>StopButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\TrendDisplay.xaml.cs">
+      <DependentUpon>TrendDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\SliderControl.xaml.cs">
+      <DependentUpon>SliderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\TurbineSpeedBarIndicator.xaml.cs">
+      <DependentUpon>TurbineSpeedBarIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\UnEnabledCheckBox.xaml.cs">
+      <DependentUpon>UnEnabledCheckBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\DiverterValve2.xaml.cs">
+      <DependentUpon>DiverterValve2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\ValveStatusIndicator.xaml.cs">
+      <DependentUpon>ValveStatusIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\ValveTest.xaml.cs">
+      <DependentUpon>ValveTest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\HeatExchanger.xaml.cs">
+      <DependentUpon>HeatExchanger.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ValueToHeightConverter.cs" />
+    <Compile Include="components\ValveTestIndicator.xaml.cs">
+      <DependentUpon>ValveTestIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\View1Model.cs" />
+    <Page Include="components\AnnunciatingMiniTrend.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\BarIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\BatchTank.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\CentrifugalPump.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="components\CheckValve.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="components\CircuitBreaker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\Close.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\ControlValve.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="components\ComponentStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="components\DelayHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\DiverterValve3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\DSSControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\GlobeValve.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\LOTO.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\MultiMiniTrend.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\OPCAlarmIndicator.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="components\Orifice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\Permissive.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\PHMValve.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\Pressurizer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\PZRHeaterElement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\RCPSeal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\ReactorCoolantPump.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\ReactorCore.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\Slider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\StackedMiniTrend.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\Demin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\DiverterValve.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="components\Heater.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\LinkLabel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\PlayButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\SolenoidValve.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="components\MixingTee.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="components\NoPressTank.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="components\SteamGenerator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\StopButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\Tank.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="components\ChargingPump.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="components\Annunciator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\TrendDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\SliderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\TurbineSpeedBarIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\UnEnabledCheckBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\Valve.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="components\CheckValve.xaml.cs">
+      <DependentUpon>CheckValve.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\CentrifugalPump.xaml.cs">
+      <DependentUpon>CentrifugalPump.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\SolenoidValve.xaml.cs">
+      <DependentUpon>SolenoidValve.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\ControlValve.xaml.cs">
+      <DependentUpon>ControlValve.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\NoPressTank.xaml.cs">
+      <DependentUpon>NoPressTank.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\Tank.xaml.cs">
+      <DependentUpon>Tank.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\ChargingPump.xaml.cs">
+      <DependentUpon>ChargingPump.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\Valve.xaml.cs">
+      <DependentUpon>Valve.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="components\DiverterValve2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\ValveStatusIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\ValveTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\HeatExchanger.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="components\ValveTestIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

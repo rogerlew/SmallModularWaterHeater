@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaterHeater", "WaterHeater\WaterHeater.csproj", "{C64E4B45-7E12-4521-ACF2-D4275E0AF753}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMWH_Instructor", "SMWH_Instructor\SMWH_Instructor.csproj", "{E0C8EAC6-343A-4E27-9AE0-B65622107295}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C64E4B45-7E12-4521-ACF2-D4275E0AF753} = {C64E4B45-7E12-4521-ACF2-D4275E0AF753}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C64E4B45-7E12-4521-ACF2-D4275E0AF753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C64E4B45-7E12-4521-ACF2-D4275E0AF753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C64E4B45-7E12-4521-ACF2-D4275E0AF753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C64E4B45-7E12-4521-ACF2-D4275E0AF753}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0C8EAC6-343A-4E27-9AE0-B65622107295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0C8EAC6-343A-4E27-9AE0-B65622107295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0C8EAC6-343A-4E27-9AE0-B65622107295}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0C8EAC6-343A-4E27-9AE0-B65622107295}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

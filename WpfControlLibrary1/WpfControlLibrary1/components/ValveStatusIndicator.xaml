@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="WpfControlLibrary1.ValveStatusIndicator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             mc:Ignorable="d" 
+             d:DesignHeight="35" d:DesignWidth="50">
+    <Grid>
+        <Rectangle Name="rect" Fill="White" Stroke="#FF666666" StrokeThickness="1" Margin="2,2,2,2"/>
+        <Label Name="label" Content="{Binding Title, FallbackValue=AA1}" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+    </Grid>
+</UserControl>

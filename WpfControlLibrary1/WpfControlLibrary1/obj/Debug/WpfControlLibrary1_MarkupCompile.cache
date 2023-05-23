@@ -1,0 +1,20 @@
+﻿WpfControlLibrary1
+
+
+library
+C#
+.cs
+C:\Users\install\Documents\Visual Studio 2013\Projects\WpfControlLibrary1\WpfControlLibrary1\obj\Debug\
+WpfControlLibrary1
+none
+false
+DEBUG;TRACE
+
+50402271547
+
+53-1899466216
+13-1319947915
+components\AnnunciatingMiniTrend.xaml;components\BarIndicator.xaml;components\BatchTank.xaml;components\CentrifugalPump.xaml;components\CheckValve.xaml;components\CircuitBreaker.xaml;components\Close.xaml;components\ControlValve.xaml;components\ComponentStyles.xaml;components\DelayHeader.xaml;components\DiverterValve3.xaml;components\DSSControl.xaml;components\GlobeValve.xaml;components\LOTO.xaml;components\MultiMiniTrend.xaml;components\OPCAlarmIndicator.xaml;components\Orifice.xaml;components\Permissive.xaml;components\PHMValve.xaml;components\Pressurizer.xaml;components\PZRHeaterElement.xaml;components\RCPSeal.xaml;components\ReactorCoolantPump.xaml;components\ReactorCore.xaml;components\Slider.xaml;components\StackedMiniTrend.xaml;components\Demin.xaml;components\DiverterValve.xaml;components\Heater.xaml;components\LinkLabel.xaml;components\PlayButton.xaml;components\SolenoidValve.xaml;components\MixingTee.xaml;components\NoPressTank.xaml;components\SteamGenerator.xaml;components\StopButton.xaml;components\Tank.xaml;components\ChargingPump.xaml;components\Annunciator.xaml;components\TrendDisplay.xaml;components\SliderControl.xaml;components\TurbineSpeedBarIndicator.xaml;components\UnEnabledCheckBox.xaml;components\Valve.xaml;components\DiverterValve2.xaml;components\ValveStatusIndicator.xaml;components\ValveTest.xaml;components\HeatExchanger.xaml;Themes\Generic.xaml;components\ValveTestIndicator.xaml;
+
+False
+

@@ -1,0 +1,78 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace WpfControlLibrary1
+{
+    /// <summary>
+    /// Interaction logic for ManualValve.xaml
+    /// </summary>
+    public partial class SolenoidValve : UserControl
+    {
+        // State <bool>
+        public static DependencyProperty StateProperty =
+            DependencyProperty.Register("State", typeof(bool),
+                                        typeof(Annunciator),
+                                        new PropertyMetadata(false));
+
+        public bool State
+        {
+            get { return (bool)GetValue(StateProperty); }
+            set { SetValue(StateProperty, value); }
+        }
+
+        public SolenoidValve()
+        {
+            this.InitializeComponent();
+        }
+
+        /*
+        public void ToggleState()
+        {
+            this.State = !this.State;
+
+            if (this.State) {
+                this.Bowtie.Style = (Style)this.Resources["PolygonStyleK"];
+            }
+            else {
+                this.Bowtie.Style = (Style)this.Resources["PolygonStyle"];
+            }
+
+        }
+        */
+    }
+
+
+    public class TwoStateFillConverter : IValueConverter
+    {
+
+        public object Convert(object value, Type targetType, 
+            object parameter, System.Globalization.CultureInfo culture)
+        {
+            if ((bool)value)
+            {
+                return Brushes.LightGray;
+            }
+            else
+            {
+                return Brushes.Black;
+            }
+        }
+        public object ConvertBack(object value, Type targetType,
+            object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

@@ -1,0 +1,20 @@
+﻿WpfControlLibrary1
+
+
+library
+C#
+.cs
+C:\Users\gpwr\Documents\Visual Studio 2012\Projects\WpfControlLibrary1\WpfControlLibrary1\obj\x86\Debug\
+WpfControlLibrary1
+none
+false
+DEBUG;TRACE
+
+12649003931
+
+15-1848966930
+131718401689
+components\BatchTank.xaml;components\CentrifugalPump.xaml;components\CheckValve.xaml;components\ControlValve.xaml;components\ComponentStyles.xaml;components\DiverterValve.xaml;components\ManualValve.xaml;components\MixingTee.xaml;components\NoPressTank.xaml;components\Tank.xaml;components\ChargingPump.xaml;components\Valve.xaml;
+
+False
+

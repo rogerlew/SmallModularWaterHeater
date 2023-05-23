@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="WpfControlLibrary1.SliderControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
+             xmlns:local="clr-namespace:WpfControlLibrary1" 
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             mc:Ignorable="d" 
+             d:DesignHeight="260" d:DesignWidth="130">
+
+    <Grid>
+        <Rectangle Fill="Gray" Margin="50,47,57,12"/>
+        <Slider Name="TheSlider" RenderTransformOrigin="0.5,0.5" Orientation="Vertical" 
+                Minimum="{Binding Minimum, FallbackValue=0}" Maximum="{Binding Maximum, FallbackValue=0}"  Value="{Binding Value, FallbackValue=0}" Margin="50,47,57,12"/>
+        <Label Name="TitleLabel" Content="{Binding Title}" FontFamily="Lucida Sans UI" FontSize="16" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center" Margin="0,0,0,213"/>
+        <Label Name="MaximumLabel" Width="50" Height="28" Content="{Binding Maximum, FallbackValue=100}" FontFamily="Lucida Sans UI" FontSize="14" HorizontalContentAlignment="Right" Margin="1,39,79,193" />
+        <Label Name="MiniumLabel" Width="50" Height="28" Content="{Binding Minimum, FallbackValue=0}" FontFamily="Lucida Sans UI" FontSize="14" HorizontalContentAlignment="Right" Margin="0,228,80,4" />
+        <Canvas Name="Container" Margin="73,39,7,4">
+            <Label Name="ValueLabel" Width="50" Height="28" Content="{Binding Value, StringFormat=\{#.#\}, FallbackValue=10.7825}"  FontFamily="Lucida Sans UI" FontSize="14"/>
+            <!--Bottom="{Binding Path=Value, Converter=local:ValueToHeightConverter}"-->
+        </Canvas>
+    </Grid>
+</UserControl>
